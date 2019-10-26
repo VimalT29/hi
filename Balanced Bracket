@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+#include <stack>
+
+using namespace std;
+int main()
+{
+    int t;cin>>t;
+    while(t--)
+    {
+        stack <int> st;
+        string s;
+        cin>>s;
+        int flag=1;
+        
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]=='(' || s[i] == '{' || s[i] == '[' )
+            {
+                st.push(s[i]);
+            }
+            else if(!st.empty())
+            {
+                if(st.top() == '(' && s[i] == ')')
+                {
+                    st.pop();
+                }
+                else if(st.top() == '{' && s[i] == '}')
+                {
+                    st.pop();
+                }
+                else if(st.top() == '[' && s[i] == ']')
+                {
+                    st.pop();
+                }
+                else
+                {
+                    flag = 0;
+                    break;
+                }
+            }
+        }
+        
+        if(flag && st.empty())
+        {
+            cout<<"YES"<<endl;
+        }
+        else cout<<"NO"<<endl;
+        
+        /*int i = 0,j = s.size()-1;
+        while(i<j)
+        {
+            if(s[i] == '(' && s[j] == ')')
+                {
+                }
+                else if(s[i] == '{' && s[j] == '}')
+                {
+                }
+                else if(s[i] == '[' && s[j] == ']')
+                {
+                }
+                else
+                {
+                    cout<<"NO";
+                    flag = 0;
+                    break;
+                }
+                i++;j--;
+        }
+        
+        if(flag)
+        {
+            cout<<"YES";
+        }
+        cout<<endl;*/
+    }
+    
+    return 0;
+}
