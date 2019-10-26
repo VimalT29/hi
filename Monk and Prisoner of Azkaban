@@ -1,0 +1,132 @@
+import java.io.OutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import static java.lang.Math.*;
+
+public class CodingLegacy {
+    public static void main(String[] args) {
+        InputStream inputStream = System.in;
+        OutputStream outputStream = System.out;
+        InputReader in = new InputReader(inputStream);
+        PrintWriter out = new PrintWriter(outputStream);
+        Palindrome solver = new Palindrome();
+        int t = 1;
+
+        for(int i=0;i<t;i++) {
+            solver.solve(i+1, in, out);
+        }
+        out.close();
+    }
+
+    static class Palindrome {
+        public void solve(int testNumber, InputReader in, PrintWriter out) {
+            int n = in.nextInt();
+            long[] a = new long[n];
+
+            for (int i = 0; i <n; i++) {
+                a[i] = in.nextLong();
+            }
+
+            long[] nge1 = new long[n];
+            long[] nge2 = new long[n];
+
+            Stack<Integer> s = new Stack<>();
+            for(int i=0;i<n;i++){
+                while( !s.isEmpty() && a[s.peek()]<=a[i]){
+                    s.pop();
+                }
+
+                nge1[i] = s.isEmpty()?-1:s.peek() +1;
+                s.push(i);
+            }
+            s.removeAllElements();
+
+            for(int i=n-1;i>=0;i--){
+                while( !s.isEmpty() && a[s.peek()]<=a[i]){
+                    s.pop();
+                }
+
+                nge2[i] = s.isEmpty()?-1:s.peek() +1;
+                s.push(i);
+            }
+
+//            out.println(Arrays.toString(nge1));
+//            out.println(Arrays.toString(nge2));
+
+            for (int i = 0; i < n; i++) {
+                out.print((nge1[i] + nge2[i])  + " ");
+            }
+        }
+    }
+
+    static class Maths{
+        public static long gcd(long a, long b)
+        {
+            if (a == 0)
+                return b;
+            return gcd(b % a, a);
+        }
+
+        public static long factorial(int n){
+            long fact = 1;
+            for(int i=1;i<=n;i++){
+                fact *= i;
+            }
+            return fact;
+        }
+    }
+
+    static class Characters{
+        public static boolean isVovel(char a){
+            if(a == 'a' || a == 'e' || a == 'i' || a == 'o' || a == 'u'){
+                return true;
+            }
+            return false;
+        }
+    }
+
+    static class Binary {
+        public static long numberOfBits(long n){
+            long count=0;
+            while(n>0){
+                count++;
+                n >>=1;
+            }
+            return count;
+        }
+    }
+
+    static class InputReader {
+        public BufferedReader reader;
+        public StringTokenizer tokenizer;
+
+        public InputReader(InputStream stream) {
+            reader = new BufferedReader(new InputStreamReader(stream), 32768);
+            tokenizer = null;
+        }
+
+        public String next() {
+            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
+                try {
+                    tokenizer = new StringTokenizer(reader.readLine());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return tokenizer.nextToken();
+        }
+
+        public int nextInt(){
+            return Integer.parseInt(next());
+        }
+
+        public Long nextLong(){
+            return Long.parseLong(next());
+        }
+    }
+}
